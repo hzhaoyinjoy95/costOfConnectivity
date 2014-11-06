@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head><style>
+body{margin:0px;}
+text{
+  font-size: 14px;
+  font-family: Arial;
+}
+rect {stroke:black;fill:white;}
+circle {fill:steelblue;opacity:.5;}
+</style></head>
+<body>
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+
+<script>
+var width = 1200,
+    height = 700, 
+    margin = 50;
+
+var color = d3.scale.ordinal()
+    .range(["#3CA638", "#5CA5D9", "#F2D544", "#F2636F", "#7E55D9"]);
+
+var cwidth=150,cheight=150,cmargin=5,maxr=5;
+
+var svg=d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+var x=d3.scale.linear().domain([0,250]).range([cmargin,cwidth-margin]);
+var y=d3.scale.linear().domain([0,1000]).range([cheight-cmargin,cmargin]);
+var o=d3.scale.linear().domain([0,100]).range([0,1]);
+
+
+var cities=["Amsterdam","Berlin","Bristol","Bucharest","Chattanooga","Copenhagen","Dublin","Hong Kong","Kansas City, KS & MO","Lafayette","London","Los Angeles","Mexico City","New York","Paris","Prague","Riga","San Francisco","Seoul","Tokyo","Toronto","Washington, DC","Zurich"];
+
+var data;
+d3.csv("multiples.csv",function(csv) {
+
+  data=d3.nest()
+    .key(function(d) {return d.city;})
+    //.key(function(d) {return d.continent[0] + " - " + d.city;})
+    //.key(function(d) {return d.continent;})
+    .sortKeys(d3.ascending)
+    .entries(csv);
+   
+  
+  // One cell for each continent
+  var g = svg.selectAll("g").data(data).enter()
+    .append("g")
+    .attr("transform",function(d,i) {
+        return "translate("+(150*(i%7))+","+ Math.floor(i/7)*175 +")";
+       });
+  // we add a rect element with a title element
+  // so that mousing over the cell will tell us which continent it is
+  g.append("rect")
+    .attr("x",cmargin)
+    .attr("y",cmargin)
+    .attr("width",cwidth-2*cmargin)
+    .attr("height",cheight-2*cmargin)
+      .append("title")
+      .text(function(d) {return d.key;})
+  // we also write its name below.
+  g.append("text")
+    .attr("y",cheight+10)
+    .attr("x",cmargin)
+    .text(function(d) {return d.key;})
+  
+  // now marks, initiated to default values
+  g.selectAll("circle")
+  // we are getting the values of the countries like this:
+  .data(function(d) {return d.values}) 
+  .enter()
+      .append("circle")
+      .attr("cx",cmargin)
+      .attr("cy",cheight-cmargin)
+      .attr("r",1)
+      // throwing in a title element
+      .append("title")
+        .text(function(d) {return "Price: " + d.price + " Download Speed: " + d.downloadspeed;});
+
+  // finally, we animate our marks in position
+  g.selectAll("circle").transition().duration(1000)
+      .attr("r",6)
+      .attr("cx",function(d) {return x(+d.price);})
+      .attr("cy",function(d) {return y(+d.downloadspeed);})
+      .style("fill", function(d) { return color(d.continent); })
+      .style("opacity",function(d) {return o(d.price);})
+      .style("opacity",function(d) {return o(+d.downloadspeed);})
+
+  var legend = svg.selectAll(".legend")
+      .data(["Europe", "North America", "Asia"])
+    .enter().append("g")
+      .attr("class", "legend")
+      .attr("transform", function(d, i) { return "translate(700, " + (550 + (i * 20)) + ")"; });
+
+  legend.append("rect")
+      .attr("x", 50)
+      .attr("width", 18)
+      .attr("height", 18)
+      .style("fill", color);
+
+  legend.append("text")
+      .attr("x", 70)
+      .attr("y", 9)
+      .attr("dy", ".35em")
+      .style("text-anchor", "start")
+      .text(function(d) { return d; });
+
+  svg.append("text")
+    .attr("x",400)
+    .attr("y",675)
+      .text("Average Monthly Price ($0 - 350 ($USD))");
+
+  svg.append("text")
+    .attr("x",375)
+    .attr("y",550)
+    .attr("writing-mode", "tb-rl")
+      .text("Download Speed");
+  
+  svg.append("text")
+    .attr("x",360)
+    .attr("y",550)
+    .attr("writing-mode", "tb-rl")
+      .text("(0-1000 Mbps)");
+
+  svg.append("rect")
+    .attr("x",400)
+    .attr("y", 550)
+    .attr("width", cwidth*2/3)
+    .attr("height", cheight*2/3);
+
+})
+
+</script>
+
+
+</body>
+</html>

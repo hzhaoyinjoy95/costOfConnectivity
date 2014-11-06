@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+body {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.dot {
+  stroke: #000;
+}
+
+</style>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<h3>Speed Leaders</h3>
+<script>
+
+var margin = {top: 20, right: 20, bottom: 30, left: 40},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+var x = d3.scale.linear()
+    .range([0, width]);
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+var color = d3.scale.category10();
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left");
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+d3.csv("data/2014SpeedLeaders.csv", function(error, data) {
+  data.forEach(function(d) {
+    d.DownloadSpeed = +d.DownloadSpeed;
+    d.UploadSpeed = +d.UploadSpeed;
+    d.MonthlyPrice = +d.MonthlyPrice;
+    d.DataCap = +d.DataCap;
+    d.DataOveragePenaltyPPP = +d.DataOveragePenaltyPPP;
+    d.ActivationFeePPP = +d.ActivationFeePPP;
+    d.ModemFeeMonthlyPPP = +d.ModemFeeMonthlyPPP;
+    d.ModemFeePurchasePPP = +d.ModemFeePurchasePPP;
+    d.ContractLengthMonths = +d.ContractLengthMonths;
+
+    //alldata - Country,City,ISP,NetworkTechnology,Bundle,DownloadSpeed,UploadSpeed,MonthlyPrice,MonthlyPricePPP,DataCap,DataOveragePenalty,DataOveragePenaltyPPP,ActivationFee,ActivationFeePPP,ModemFeeMonthly,ModemFeeMonthlyPPP,ModemFeePurchase,ModemFeePurchasePPP,ContractLengthMonths,AddressAuthenitcation,Website,Notes,Currency
+  });
+
+  x.domain(d3.extent(data, function(d) { return d.DownloadSpeed; })).nice();
+  y.domain(d3.extent(data, function(d) { return d.MonthlyPricePPP; })).nice();
+
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("x", width)
+      .attr("y", -6)
+      .style("text-anchor", "end")
+      .text("Download Speed (Mbps)");
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Price (PPP)")
+
+  svg.selectAll(".dot")
+      .data(data)
+    .enter().append("circle")
+      .attr("class", "dot")
+      .attr("r", 4)
+      .attr("cx", function(d) { return x(d.DownloadSpeed); })
+      .attr("cy", function(d) { return y(d.MonthlyPricePPP); })
+      .style("fill", function(d) { return color(d.Continent); })
+      .style("opacity", 0.5)
+      .style("stroke-width", 0.1)
+      .append("svg:title")
+        .text(function(d){ return d.City + "\nDownload Speed: " + d.DownloadSpeed + " Mbps \nPrice: $"+ d.MonthlyPricePPP + "\nData Cap: " + d.DataCap;});
+
+  svg.selectAll("text")
+      .data(data)
+      .enter().append("text")
+        .attr("x", function(d){ return x(d.DownloadSpeed) + 5; })
+        .attr("y", function(d) { return y(d.MonthlyPricePPP) + 5; })
+        .text(function(d){ return d.City;})
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "10px")
+        .attr("fill", "black"); 
+
+  var legend = svg.selectAll(".legend")
+      .data(color.domain())
+    .enter().append("g")
+      .attr("class", "legend")
+      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+  legend.append("rect")
+      .attr("x", width - 94)
+      .attr("width", 18)
+      .attr("height", 18)
+      .style("fill", color);
+
+  legend.append("text")
+      .attr("x", width - 100)
+      .attr("y", 9)
+      .attr("dy", ".35em")
+      .style("text-anchor", "end")
+      .text(function(d) { return d; });
+
+});
+
+</script>
