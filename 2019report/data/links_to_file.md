@@ -72,7 +72,7 @@
    * medium household income: 
    * PPP: 
 ## China-Hong Kong:
-   * city population: 
-   * population density: 
-   * medium household income: 
+   * city population: https://www.bycensus2016.gov.hk/en/bc-mt.html#footnote999991
+   * population density: https://www.bycensus2016.gov.hk/en/bc-mt.html#footnote999991
+   * medium household income: https://www.bycensus2016.gov.hk/en/bc-mt.html#footnote999991
    * PPP: 
