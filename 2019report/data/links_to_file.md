@@ -1,10 +1,14 @@
 # Individual level data source
 
 ## Canada-Toronto:
-   * city population: 2019report/data/CA_population_area.CSV
-   * population density: 2019report/data/CA_population_area.CSV
+   * city population: 
+   https://github.com/hzhaoyinjoy95/costOfConnectivity/blob/patch-1/2019report/data/CA_population_area.CSV
+   * population density: 
+   https://github.com/hzhaoyinjoy95/costOfConnectivity/blob/patch-1/2019report/data/CA_population_area.CSV
    * medium household income: 
+   
    * PPP: 
+   https://github.com/hzhaoyinjoy95/costOfConnectivity/blob/patch-1/2019report/data/WorldBank_PPP.csv
 ## United Kingdom-London:
    * city population: 
    * population density: 
