@@ -1,8 +1,8 @@
 # Individual level data source
 
 ## Canada-Toronto:
-   * city population: 
-   * population density: 
+   * city population: 2019report/data/CA_population_area.CSV
+   * population density: 2019report/data/CA_population_area.CSV
    * medium household income: 
    * PPP: 
 ## United Kingdom-London:
