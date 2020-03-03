@@ -1,13 +1,17 @@
 # Individual level data source
-* PPP: https://github.com/hzhaoyinjoy95/costOfConnectivity/blob/patch-1/2019report/data/WorldBank_PPP.csv
+* PPP: https://data.worldbank.org/indicator/PA.NUS.PPP
 ## Canada-Toronto:
-   * city population: https://github.com/hzhaoyinjoy95/costOfConnectivity/blob/patch-1/2019report/data/CA_population_area.CSV
-   * population density: https://github.com/hzhaoyinjoy95/costOfConnectivity/blob/patch-1/2019report/data/CA_population_area.CSV
-   * medium household income: https://github.com/hzhaoyinjoy95/costOfConnectivity/blob/patch-1/2019report/data/CA-2016-Census-Backgrounder-Income.pdf
-## United Kingdom-London:
-   * city population: https://github.com/hzhaoyinjoy95/costOfConnectivity/blob/patch-1/2019report/data/UK_population_area%20.csv
-   * population density: https://github.com/hzhaoyinjoy95/costOfConnectivity/blob/patch-1/2019report/data/UK_population_area%20.csv
-   * medium household income: https://github.com/hzhaoyinjoy95/costOfConnectivity/blob/patch-1/2019report/data/UK_income_region.csv
+   * city population: Census metropolitan areas and census agglomerations
+   https://www12.statcan.gc.ca/census-recensement/2016/dp-pd/hlt-fst/pd-pl/Comprehensive.cfm
+   * population density: Census metropolitan areas and census agglomerations
+   https://www12.statcan.gc.ca/census-recensement/2016/dp-pd/hlt-fst/pd-pl/Comprehensive.cfm
+   * medium household income: https://www12.statcan.gc.ca/census-recensement/2016/dp-pd/hlt-fst/inc-rev/Table.cfm?Lang=Eng&T=102&PR=0&D1=1&RPP=25&SR=1&S=108&O=D
+## United Kingdom-London(Region):
+   * city population: 
+  https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/datasets/populationestimatesforukenglandandwalesscotlandandnorthernireland
+   * population density: 
+  https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/datasets/populationestimatesforukenglandandwalesscotlandandnorthernireland
+   * medium household income:     https://www.ons.gov.uk/peoplepopulationandcommunity/personalandhouseholdfinances/incomeandwealth/adhocs/11323medianhouseholdincomebyregionfinancialyearending2018
 ## France-Paris:
    * city population: https://www.insee.fr/fr/statistiques/1405599?geo=DEP-75+AU2010-001
    * population density: https://www.insee.fr/fr/statistiques/1405599?geo=DEP-75+AU2010-001
